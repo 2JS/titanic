@@ -1,5 +1,6 @@
 import pytorch_lightning as pl
 import torch
+from pytorch_lightning.callbacks import LearningRateMonitor
 from pytorch_lightning.loggers import WandbLogger
 
 from data import TitanicDataset
@@ -31,7 +32,10 @@ def main():
         accelerator="gpu",
         devices=1,
         logger=logger,
-        callbacks=[OutputLogger()],
+        callbacks=[
+            LearningRateMonitor(logging_interval="step"),
+            OutputLogger(),
+        ],
         max_epochs=100,
     )
 
