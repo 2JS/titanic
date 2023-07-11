@@ -1,0 +1,3 @@
+[submodule "lightning_utils"]
+	path = lightning_utils
+	url = git@github.com:2JS/lightning-utils.git
