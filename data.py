@@ -16,10 +16,10 @@ class TitanicDataset(Dataset):
         self.x, self.y = self._preprocess(dataframe)
 
     def __len__(self):
-        return len(self.y)
+        return len(self.x)
 
     def __getitem__(self, index):
-        return self.x[index], self.y[index]
+        return self.x[index], self.y[index] if self.y is not None else 0
 
     @staticmethod
     def _preprocess(dataframe):
@@ -37,8 +37,11 @@ class TitanicDataset(Dataset):
         max, _ = x.max(0)
         x = (x - min) / (max - min)
 
-        y = dataframe["Survived"]
-        y = torch.tensor(y.values, dtype=torch.float32)
+        if "Survived" in dataframe.columns:
+            y = dataframe["Survived"]
+            y = torch.tensor(y.values, dtype=torch.float32)
+        else:
+            y = None
 
         return x, y
 
