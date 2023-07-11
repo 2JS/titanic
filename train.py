@@ -4,6 +4,7 @@ from pytorch_lightning.callbacks import LearningRateMonitor
 from pytorch_lightning.loggers import WandbLogger
 
 from data import TitanicDataset
+from lightning_utils.file_lr import FileLRCallback
 from lightning_utils.loggers import OutputLogger
 from lightningmodule import LightningModule
 from model import SimpleModel
@@ -35,6 +36,7 @@ def main():
         callbacks=[
             LearningRateMonitor(logging_interval="step"),
             OutputLogger(),
+            FileLRCallback(),
         ],
         max_epochs=100,
     )
