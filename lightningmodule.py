@@ -43,6 +43,13 @@ class LightningModule(pl.LightningModule):
             "loss": loss,
         }
 
+    def predict_step(self, batch, batch_idx, dataloader_idx=0):
+        x, _ = batch
+
+        y_hat = self.model(x).flatten()
+
+        return y_hat
+
     def on_train_epoch_end(self):
         self.log("train_acc", self.train_accuracy.compute(), prog_bar=True)
         self.train_accuracy.reset()
